@@ -1,0 +1,17 @@
+@import "second";
+
+$light_blue: #51c7c7;
+
+html, body {
+  margin: 0;
+  width: 100%;
+}
+
+body {
+  padding: 0 300px;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: $light_blue;
+}
