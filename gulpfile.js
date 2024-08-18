@@ -1,13 +1,43 @@
-const {src, dest, series, watch} = require('gulp'); // src - задает пути, файлы, маски к ним, dest - указывает конечный путь и файл после обработки, series - позволяет вызвать несколько функций подряд, watch - позволяет отслеживать изменения файлов в реальном времени
-const include = require("gulp-file-include"); // Шаблонизатор, который позволяет по префиксу вставлять другие файлы
-const htmlmin = require("gulp-htmlmin") // Минифицирует html
-const del = require("del") // Позволяет удалять файлы
-// const sass = require('gulp-sass') // Компилирует scss в css
-const sass = require('gulp-sass')(require('sass')) // Если не делали npm install --save-dev sass, то закомментировать эту строку и открыть предыдущую, если будет вызывать проблему, то проделать установку и раскомментировать обратно
-const csso = require('gulp-csso') // Минифицирует css
-const autoprefixer = require("gulp-autoprefixer") // Адаптирует стили под старые версии браузеров и разные движки
-const concat = require("gulp-concat") // Соединяет файлы в один
-const sync = require("browser-sync").create() // Позволяет в реальном времени отображать изменения файлов в браузере
+/**
+ * src - задает пути, файлы, маски к ним, dest - указывает конечный путь и файл после обработки, series - позволяет вызвать несколько функций подряд, watch - позволяет отслеживать изменения файлов в реальном времени
+ */
+const {src, dest, series, watch} = require('gulp');
+/**
+ * gulp-file-include - шаблонизатор, который позволяет по префиксу вставлять другие файлы
+ */
+const include = require("gulp-file-include");
+/**
+ * htmlmin - минифицирует html
+ */
+const htmlmin = require("gulp-htmlmin");
+/**
+ * gulp-htmlmin - позволяет удалять файлы
+ */
+const del = require("del");
+/**
+ * gulp-sass - компилирует scss в css
+ */
+// const sass = require('gulp-sass');
+/**
+ * если не делали npm install --save-dev sass, то закомментировать эту строку и открыть предыдущую, если будет вызывать проблему, то проделать установку и раскомментировать обратно
+ */
+const sass = require('gulp-sass')(require('sass'));
+/**
+ * gulp-csso - минифицирует css
+ */
+const csso = require('gulp-csso');
+/**
+ * gulp-autoprefixer - адаптирует стили под старые версии браузеров и разные движки
+ */
+const autoprefixer = require("gulp-autoprefixer");
+/**
+ * gulp-concat - объединяет файлы
+ */
+const concat = require("gulp-concat");
+/**
+ * browser-sync - позволяет в реальном времени отображать изменения файлов в браузере
+ */
+const sync = require("browser-sync").create();
 
 function html() {
     return src("src/**.html") // Получаем файлы с расширением html
@@ -25,10 +55,9 @@ function scss() {
         .pipe(sass()) // Конвертируем scss в css
         .pipe(autoprefixer({
             overrideBrowserslist: ['last 2 versions'] // Адаптируем стили под 2 последних версии браузеров
-            // Раньше писалось browsers, вместо overrideBrowserslist, желательно заменить пакет
         }))
         .pipe(csso()) // Минифицируем
-        .pipe(concat("style.css")) // Соединяем полученные файлы, если их найдет несколько в один
+        .pipe(concat("style.css")) // Объединяем полученные файлы
         .pipe(dest("dist")) // Указываем в какую папку поместить конечный файл
 }
 
